@@ -1,7 +1,7 @@
 class Student:
-    def __init__(self, name: str, age: int, id: str, email: str, phone: str):
+    def __init__(self, name: str, age: str, id: str, email: str, phone: str):
         self.name: str = name
-        self.age: int = age
+        self.age: str = age
         self.id: str = id
         self.email: str = email
         self.phone: str = phone
@@ -11,23 +11,12 @@ class Student:
     ' Getters and Setters
     '
     '''
-
-    @property
-    def name(self):
-        return self.name
     
-    @property
-    def age(self):
-        return self.age
-    
-    @property
-    def id(self):
-        return self.id
-
-    @property
-    def email(self):
-        return self.email
-
-    @property
-    def phone(self):
-        return self.phone
+    def get_data(self) -> list[str]:
+        return ( 
+            self.name,
+            self.age,
+            self.id,
+            self.email,
+            self.phone
+        )
