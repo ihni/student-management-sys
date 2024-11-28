@@ -9,8 +9,8 @@ def main():
     auth = Auth(repo, number_attempts=3)
     student_controller = StudentController(repo)
 
-    gui = GUI(auth, student_controller)
-    gui.run()
+    app = GUI(auth, student_controller)
+    app.run()
 
 if __name__ == "__main__":
     main()

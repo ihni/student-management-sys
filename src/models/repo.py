@@ -24,7 +24,6 @@ class Repo:
 
     def load_to_program(self) -> dict:
         container = {}
-
         try:
             with open(self.file_path, "r") as file:
                 for line in file.readlines():

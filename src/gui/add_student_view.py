@@ -4,7 +4,7 @@ from tkinter import messagebox
 
 class AddStudentView(Frame):
     def __init__(self, master, auth, student_controller):
-        super().__init__(master)
+        super().__init__(master.root)
         self.master = master
         self.auth = auth
         self.student_controller = student_controller

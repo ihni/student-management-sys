@@ -1,9 +1,8 @@
-from tkinter import *
-from tkinter import messagebox
+from tkinter import Frame, Label, Entry, Button, messagebox
 
 class LoginView(Frame):
     def __init__(self, master, auth, student_controller):
-        super().__init__(master)
+        super().__init__(master.root)
         self.master = master
         self.auth = auth
         self.student_controller = student_controller
@@ -27,6 +26,6 @@ class LoginView(Frame):
 
         if login_result == "Login successful":
             messagebox.showinfo("Success", "Login successful!")
-            self.master.switch_view('dashboard')
+            self.master.switch_view('dashboard')  # Switch to the dashboard view
         else:
             messagebox.showerror("Login Failed", login_result)

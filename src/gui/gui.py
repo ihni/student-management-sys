@@ -25,14 +25,14 @@ class GUI:
     def switch_view(self, view_name):
         for view in self.views.values():
             view.pack_forget()
-        view = self.views.get(view_name)
+        view = self.views[view_name]
         if view:
             view.pack()
     
     def create_views(self):
-        self.views['login'] = LoginView(self.root, self.auth, self.student_controller)
-        self.views['dashboard'] = DashboardView(self.root, self.auth, self.student_controller)
-        self.views['add_student'] = AddStudentView(self.root, self.auth, self.student_controller)
+        self.views['login'] = LoginView(self, self.auth, self.student_controller)
+        self.views['dashboard'] = DashboardView(self, self.auth, self.student_controller)
+        self.views['add_student'] = AddStudentView(self, self.auth, self.student_controller)
 
     def run(self):
         self.create_views()

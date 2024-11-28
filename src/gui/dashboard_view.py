@@ -3,7 +3,7 @@ from tkinter import messagebox
 
 class DashboardView(Frame):
     def __init__(self, master, auth, student_controller):
-        super().__init__(master)
+        super().__init__(master.root)
         self.master = master
         self.auth = auth
         self.student_controller = student_controller
@@ -29,7 +29,7 @@ class DashboardView(Frame):
         self.pack()
 
     def view_all_students(self):
-        students = self.student_contrller.fetch_all_students()
+        students = self.student_controller.fetch_all_students()
         display_txt = ""
 
         for student in students:
