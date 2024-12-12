@@ -22,10 +22,10 @@ class LoginView(Frame):
     def login(self):
         id = self.entry_id.get()
 
-        login_result = self.auth.login(id)
+        result = self.auth.login(id)
 
-        if login_result == "Login successful":
+        if result == "Login successful":
             messagebox.showinfo("Success", "Login successful!")
-            self.master.switch_view('dashboard')  # Switch to the dashboard view
+            self.master.switch_view('dashboard')
         else:
-            messagebox.showerror("Login Failed", login_result)
+            messagebox.showerror("Login Failed", result)
