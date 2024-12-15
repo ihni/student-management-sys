@@ -80,6 +80,20 @@ class SearchStudentFrame(Frame):
             email = result.email
             phone = result.phone
 
+            '''---------------------------------------------------------
+            This is to make sure that the error box won't appear
+                - IDK why it pops up in other machines but not on my local machine
+                - temporary fix for now
+            '''
+            self.name_label.config(text="")
+            self.age_label.config(text="")
+            self.id_label.config(text="")
+            self.email_label.config(text="")
+            self.phone_label.config(text="")
+            self.profile_section.pack_forget()
+            self.error_box.pack_forget()
+            '''----------------------------------------------------------'''
+
             self.name_label.config(text=f"Name: {name}")
             self.age_label.config(text=f"Age: {age}")
             self.id_label.config(text=f"ID: {id}")
