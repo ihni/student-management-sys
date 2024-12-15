@@ -6,7 +6,7 @@ class StudentController:
         print(f"{CYAN}Initializing student controller{RESET}")
         self.repo = repo
 
-    def add_student(self, name, age, id, email, phone):
+    def add_student(self, name, age, id, email, phone) -> dict[str]:
         print(f"{YELLOW}Creating a student with these attributes:{RESET}")
         print(
             f"Name: {name if name else None}\n"

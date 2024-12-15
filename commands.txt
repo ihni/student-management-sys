@@ -1,0 +1,28 @@
+'''
+Functions from Auth Model:
+
+__init__(repo)
+
+login(id: str) -> int
+    - -1 for no more attempts
+    - 1 for success
+    - 0 for login failed
+
+login() -> bool
+
+get_user() -> user object
+
+reset_attempts()
+    - resets the auth attempts to 3
+'''
+
+'''
+Functions from Student Controller:
+__init__(repo)
+
+add_student(name, age, id, email, phone) -> a dictionary of errors if there was errors else a success message
+
+fetch_student_by_id(id) -> returns student object else a string saying a student wasn't found
+
+fetch_all_students() -> returns a list of students
+'''

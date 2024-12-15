@@ -1,1 +1,1 @@
-# src/controllers/__init__.py
+from .student_controller import StudentController
