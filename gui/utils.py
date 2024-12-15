@@ -20,6 +20,3 @@ class FrameManager:
         frame_to_show = self.frames.get(name)
         if frame_to_show:
             frame_to_show.pack(fill="both", expand=True)
-
-        if name == "dashboard":
-            frame_to_show.refresh_user()

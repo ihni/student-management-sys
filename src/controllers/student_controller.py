@@ -50,7 +50,7 @@ class StudentController:
         if result:
             print(f"{GREEN}Result: Found student id: {id}!{RESET}")
             return result
-        print(f"{YELLOW}Result: Could not finid studentwith id: {id}{RESET}")
+        print(f"{YELLOW}Result: Could not find id student with id: {id}{RESET}")
         return None
 
     def fetch_all_students(self):

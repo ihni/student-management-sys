@@ -41,6 +41,7 @@ class LoginFrame(Frame):
         if result == 1:
             self.id_entry.delete(0, 'end')
             self.auth.reset_attempts()
+            self.reset_status_message()
             self.switch_to_dashboard()
 
         elif result == 0:
@@ -67,7 +68,9 @@ class LoginFrame(Frame):
             self.id_label.pack_forget()
             self.id_entry.pack_forget()
             self.login_button.pack_forget()
-        self.status_message.pack(pady=LOGIN_STATUS_PADY)
+            
+        if self.status_message.cget("text"):
+            self.status_message.pack(pady=LOGIN_STATUS_PADY)
 
     def reset_status_message(self):
         self.status_message.config(text="", bg=None, fg=None)

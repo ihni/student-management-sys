@@ -35,13 +35,11 @@ class RootWindow:
         self.root.geometry(root_geometry)
 
     def init_frames(self):
-        """Initialize and display the login frame."""
         self.login_frame = LoginFrame(self.root, self.auth, self.switch_to_dashboard)
         self.frame_manager.add_frame("login", self.login_frame)
         self.frame_manager.switch_to("login")
 
     def switch_to_login(self):
-        """Switch back to the login frame."""
         # Destroy the dashboard frame if it exists
         if self.frame_manager.frames.get("dashboard"):
             self.frame_manager.remove_frame("dashboard")
@@ -51,7 +49,7 @@ class RootWindow:
     def switch_to_dashboard(self):
         if self.frame_manager.frames.get("dashboard"):
             self.frame_manager.remove_frame("dashboard")
-            
+
         self.dashboard_frame = DashboardFrame(self.root, self.auth, self.student_controller, self.frame_manager)
         self.frame_manager.add_frame("dashboard", self.dashboard_frame)
         self.frame_manager.switch_to("dashboard")
