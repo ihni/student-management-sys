@@ -9,7 +9,7 @@ A simple student registration system for managing student records made with Pyth
 - **Profile**: View and manage the logged-in user's profile.
 
 ## Prerequisites
-- [Python] (version 3.13 above)
+- [Python](https://www.python.org/downloads/) (version 3.13 above)
 
 ## Installation
 
@@ -35,6 +35,7 @@ A simple student registration system for managing student records made with Pyth
     - for this example, feel free to use: `root`
 
 3. After logging in, you will be taken to the dashboard, where you can view, register, and search students.
+
 
 ## Project Structure
 ```graphql
@@ -63,8 +64,6 @@ student-regis/
 │   │   └── repo.py                    # Repository for managing data storage operations.
 │   └── utilities/                     # Helper functions for backend tasks.
 │       └── color.py                   # Utility for handling color-related tasks.
-├── .gitignore                         # Git ignore configuration for excluded files.
 ├── main.py                            # Entry point to run the application.
-├── README.md                          # Project documentation.
 └── requirements.txt                   # List of required Python libraries for the project.
 ```

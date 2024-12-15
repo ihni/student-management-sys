@@ -9,27 +9,35 @@ from tkinter import Frame, Label, Button, Entry
 
 class LoginFrame(Frame):
     def __init__(self, parent, auth, switch_to_dashboard):
-        super().__init__(parent, bg=LOGIN_FRAME_BACKGROUND)
+        super().__init__(parent, bg="#ededed")
         self.auth = auth
         self.switch_to_dashboard = switch_to_dashboard
+        
+        '''
 
-        # Introduction label
-        self.label = Label(self, text=LOGIN_LABEL, font=LOGIN_LABEL_FONT)
-        self.label.pack(pady=LOGIN_LABEL_PADY)
+        Form in the center of the login frame
 
-        # Status box
-        self.status_message = Label(self, text="", fg=LOGIN_STATUS_FG, font=LOGIN_STATUS_FONT)
+        '''
+        self.form_frame = Frame(self, bg="white", padx=40, pady=40)
+        self.form_frame.pack(expand=True)
 
-        # ID Entry and Label
-        self.id_label = Label(self, text=LOGIN_ID_LABEL, font=LOGIN_ID_LABEL_FONT)
-        self.id_label.pack(pady=LOGIN_ID_LABEL_PADY)
+        self.title_label = Label(self.form_frame, text="Student Login", font=("Helvetica", 24, "bold"), bg="white", fg="#2c3e50")
+        self.title_label.grid(row=0, column=0, columnspan=2, pady=(20, 5))
 
-        self.id_entry = Entry(self, font=LOGIN_ID_ENTRY_FONT)
-        self.id_entry.pack(pady=LOGIN_ID_ENTRY_PADY)
+        self.id_label = Label(self.form_frame, text="Enter your Student ID", font=("Helvetica", 12), bg="white", fg="#2c3e50")
+        self.id_label.grid(row=1, column=0, columnspan=2, pady=(5, 5))
+
+        # ID Entry Field with centered text and light background
+        self.id_entry = Entry(self.form_frame, font=("Helvetica", 14), bd=2, relief="solid", fg="#2c3e50", bg="white", justify="center")
+        self.id_entry.grid(row=2, column=0, columnspan=2, pady=(5, 10))  # Grid with some padding
+
+        # Status message (hidden until needed)
+        self.status_message = Label(self.form_frame, text="", font=("Helvetica", 10), fg="red", bg="white")
+        self.status_message.grid(row=3, column=0, columnspan=2, pady=(5, 15))  # Grid with some padding below entry
 
         # Login button
-        self.login_button = Button(self, text=LOGIN_BUTTON_TEXT, font=LOGIN_BUTTON_FONT, command=self.login)
-        self.login_button.pack(pady=LOGIN_BUTTON_PADY)
+        self.login_button = Button(self.form_frame, text="Login", font=("Helvetica", 14, "bold"), bg="#4CAF50", fg="white", bd=0, relief="flat", width=20, command=self.login)
+        self.login_button.grid(row=4, column=0, columnspan=2, pady=(10, 20))  # Grid with padding below status message
 
     def login(self):
         user_id = self.id_entry.get()
@@ -41,37 +49,32 @@ class LoginFrame(Frame):
         if result == 1:
             self.id_entry.delete(0, 'end')
             self.auth.reset_attempts()
-            self.reset_status_message()
             self.switch_to_dashboard()
-
         elif result == 0:
             if not user_id:
                 self.status_message.config(
-                    text=f"Please enter an id. {number_attempts} more attempts left", 
-                    fg=LOGIN_STATUS_FG,
-                    bg="grey",
+                    text=f"Please enter an ID. {number_attempts} more attempts left",
+                    fg="red"
                 )
             else:
                 self.id_entry.delete(0, 'end')
                 self.status_message.config(
                     text=f"ID is incorrect. {number_attempts} more attempts left", 
-                    fg=LOGIN_STATUS_FG,
-                    bg=LOGIN_STATUS_FAILED,
+                    fg="red"
                 )
         elif result == -1:
             self.status_message.config(
-                text="You have run out of attempts, please contact the admin", 
-                fg=LOGIN_STATUS_FG,
-                bg=LOGIN_STATUS_FAILED,
+                text="You have run out of attempts. Please contact the admin.", 
+                fg="red"
             )
-            self.label.pack_forget()
-            self.id_label.pack_forget()
-            self.id_entry.pack_forget()
-            self.login_button.pack_forget()
-            
+            self.title_label.grid_forget()
+            self.id_label.grid_forget()
+            self.id_entry.grid_forget()
+            self.login_button.grid_forget()
+
         if self.status_message.cget("text"):
-            self.status_message.pack(pady=LOGIN_STATUS_PADY)
+            self.status_message.grid(row=3, column=0, columnspan=2, pady=(5, 15))
 
     def reset_status_message(self):
-        self.status_message.config(text="", bg=None, fg=None)
-        self.status_message.pack_forget()
+        self.status_message.config(text="")
+        self.status_message.grid_forget()

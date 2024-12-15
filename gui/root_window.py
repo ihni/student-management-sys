@@ -1,4 +1,4 @@
-from tkinter import Tk
+from tkinter import Tk, PhotoImage
 from .config.attributes import *
 from .utils import FrameManager
 
@@ -12,11 +12,7 @@ from .dashboard_frame import DashboardFrame
 # -----------------------------------------------------
 
 class RootWindow:
-
-    ROOT_TITLE = "Registration System"
-    ROOT_SCALE = 1.5
-    ROOT_BACKGROUND = "#ffffff"
-
+    
     def __init__(self, auth, student_controller):
         self.auth = auth
         self.student_controller = student_controller
@@ -24,11 +20,14 @@ class RootWindow:
         self.root.config(bg=ROOT_BACKGROUND)
         self.root.title(ROOT_TITLE)
         self.setup_geometry()
-        
+
+        image = PhotoImage(file="gui/images/book.png")
+        self.root.iconphoto(False, image)
+
         self.frame_manager = FrameManager(self.root)
 
         self.init_frames()
-
+        
     def setup_geometry(self):
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
@@ -45,7 +44,6 @@ class RootWindow:
         self.frame_manager.switch_to("login")
 
     def switch_to_login(self):
-        # Destroy the dashboard frame if it exists
         if self.frame_manager.frames.get("dashboard"):
             self.frame_manager.remove_frame("dashboard")
 

@@ -9,6 +9,9 @@ import re
 
 class RegisterStudentFrame(Frame):
     def __init__(self, parent, student_controller, view_all):
+        '''
+        StringVar is used to automatically update the variables with respect to the Entry Widget allowing for typecasting as well
+        '''
         super().__init__(parent, bg="white")
         self.student_controller = student_controller
         self.view_all = view_all
