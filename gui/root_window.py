@@ -12,6 +12,11 @@ from .dashboard_frame import DashboardFrame
 # -----------------------------------------------------
 
 class RootWindow:
+
+    ROOT_TITLE = "Registration System"
+    ROOT_SCALE = 1.5
+    ROOT_BACKGROUND = "#ffffff"
+
     def __init__(self, auth, student_controller):
         self.auth = auth
         self.student_controller = student_controller
