@@ -30,7 +30,7 @@ class StudentController:
             errors['phone'] = 'A phone number is required'
 
         print(f"{YELLOW}Looking for duplicate ID ({RESET}{id}{YELLOW}) in repo:{RESET}")
-        if not self.repo.fetch_student_by_id(id):
+        if self.repo.fetch_student_by_id(id):
             errors['duplicate'] = 'Duplicate ID found'
 
         if errors:
@@ -41,7 +41,6 @@ class StudentController:
 
         student = Student(name, age, id, email, phone)
         self.repo.add_student(student)
-        self.repo.write_all_to_file()
         print(f"{GREEN}{student.name} was successfully created and stored in the repo!{RESET}")
         return {'success' : f'Student {name} added successfully'}
 
@@ -52,7 +51,7 @@ class StudentController:
             print(f"{GREEN}Result: Found student id: {id}!{RESET}")
             return result
         print(f"{YELLOW}Result: Could not finid studentwith id: {id}{RESET}")
-        return f'Student ID {id} not found'
+        return None
 
     def fetch_all_students(self):
         print(f"{CYAN}Fetching all students...{RESET}")

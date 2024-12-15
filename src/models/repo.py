@@ -9,6 +9,7 @@ class Repo:
 
     def add_student(self, student: object):
         self.container[student.id] = student
+        self.write_all_to_file()
 
     def fetch_student_by_id(self, id: str) -> object:
         if id in self.container:
@@ -20,6 +21,7 @@ class Repo:
 
     def write_all_to_file(self):
         """Writes all students to the file in a formatted table with dynamic column widths."""
+        print("Preparing to write to file")
         with open(self.file_path, "w") as file:
             # Define headers
             headers = ["Name", "Age", "ID", "Email", "Phone"]

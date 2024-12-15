@@ -22,5 +22,5 @@ if type(result) == object:
     repo.add_student()
 
 # ----------- Declaring root window -----------
-app = RootWindow()
+app = RootWindow(auth, student_controller)
 app.root.mainloop()

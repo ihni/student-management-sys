@@ -12,9 +12,10 @@ class FrameManager:
             frame.pack_forget()
 
     def switch_to(self, name):
-        for frame_name, frame in self.frames.items():
-            if frame_name == name:
-                print(f"switching frame to: {frame_name}")
-                frame.pack(fill="both", expand=True)
-            else:
-                frame.pack_forget()
+        for _, frame in self.frames.items():
+            frame.pack_forget()
+
+        frame_to_show = self.frames.get(name)
+        if frame_to_show:
+            print(f"switching frame to: {name}")
+            frame_to_show.pack(fill="both", expand=True)

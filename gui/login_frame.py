@@ -2,16 +2,23 @@ from .config.attributes import *
 from tkinter import Frame, Label, Button, Entry
 
 class LoginFrame(Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, auth, switch_to_dashboard):
         super().__init__(parent, bg = LOGIN_FRAME_BACKGROUND)
-        
+
         # Introduction label
+        self.auth = auth
+        self.switch_to_dashboard = switch_to_dashboard
+
         self.label = Label(self, text=LOGIN_LABEL, font=LOGIN_LABEL_FONT)
         self.label.pack(pady=LOGIN_LABEL_PADY)
 
-        # Error box
-        self.error_message = Label(self, text="", fg=LOGIN_ERROR_FG, font=LOGIN_ERROR_FONT)
-        self.error_message.pack(pady=LOGIN_ERROR_PADY)
+        # status box
+        self.status_message = Label(self, 
+            text="", 
+            fg=LOGIN_STATUS_FG, 
+            font=LOGIN_STATUS_FONT,
+
+        )
 
         # ID Entry and Label
         self.id_label = Label(self, text=LOGIN_ID_LABEL, font=LOGIN_ID_LABEL_FONT)
@@ -21,5 +28,41 @@ class LoginFrame(Frame):
         self.id_entry.pack(pady=LOGIN_ID_ENTRY_PADY)
 
         # Login button
-        self.login_button = Button(self, text=LOGIN_BUTTON_TEXT, font=LOGIN_BUTTON_FONT)
+        self.login_button = Button(self, text=LOGIN_BUTTON_TEXT, font=LOGIN_BUTTON_FONT, command=self.login)
         self.login_button.pack(pady=LOGIN_BUTTON_PADY)
+
+    def login(self):
+        user_id = self.id_entry.get()
+        result = self.auth.login(user_id)
+        number_attempts = self.auth.number_attempts
+
+        if result == 1:
+            self.id_entry.delete(0, 'end')
+
+            self.switch_to_dashboard()
+
+        elif result == 0:
+            if not user_id:
+                self.status_message.config(
+                    text=f"Please enter an id. {number_attempts} more attempts left", 
+                    fg=LOGIN_STATUS_FG,
+                    bg="grey",
+                )
+            else:
+                self.id_entry.delete(0, 'end')
+                self.status_message.config(
+                    text=f"ID is incorrect. {number_attempts} more attempts left", 
+                    fg=LOGIN_STATUS_FG,
+                    bg=LOGIN_STATUS_FAILED,
+                )
+        elif result == -1:
+            self.status_message.config(
+                text="You have run out of attempts, please contact the admin", 
+                fg=LOGIN_STATUS_FG,
+                bg=LOGIN_STATUS_FAILED,
+            )
+            self.label.pack_forget()
+            self.id_label.pack_forget()
+            self.id_entry.pack_forget()
+            self.login_button.pack_forget()
+        self.status_message.pack(pady=LOGIN_STATUS_PADY)

@@ -1,5 +1,5 @@
 ROOT_TITLE = "Registration System"
-ROOT_SCALE = 2
+ROOT_SCALE = 1.5
 ROOT_BACKGROUND = "#ffffff"
 
 
@@ -16,10 +16,12 @@ LOGIN_LABEL = "Please login to access the system"
 LOGIN_LABEL_FONT = ("Arial", 20)
 LOGIN_LABEL_PADY = 20
 
-# error box
-LOGIN_ERROR_FG = "#ff0000"
-LOGIN_ERROR_FONT = ("Arial", 14)
-LOGIN_ERROR_PADY = (20, 10)
+# status box
+LOGIN_STATUS_FG = "#ffffff"
+LOGIN_STATUS_FONT = ("Arial", 14)
+LOGIN_STATUS_FAILED = "#f5715d"
+LOGIN_STATUS_SUCCESS = "#79e643"
+LOGIN_STATUS_PADY = (20, 10)
 
 # id label & entry
 LOGIN_ID_LABEL = "Enter your ID:"

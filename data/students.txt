@@ -1,3 +1,4 @@
 Name | Age | ID   | Email         | Phone
 -----------------------------------------
 John | 99  | root | root@root.com | N/A  
+123  | 123 | 123  | 123@gmail.com | 123  
