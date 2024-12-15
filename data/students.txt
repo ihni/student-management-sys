@@ -1,4 +1,8 @@
-Name | Age | ID   | Email         | Phone
------------------------------------------
-John | 99  | root | root@root.com | N/A  
-123  | 123 | 123  | 123@gmail.com | 123  
+Name     | Age  | ID     | Email           | Phone  
+----------------------------------------------------
+John     | 99   | root   | root@root.com   | N/A    
+123      | 123  | 123    | 123@gmail.com   | 123    
+Jane Doe | 24   | boo    | boo@boo.com     | 1239329
+Test     | 20   | test   | test@test.com   | 1230   
+Demo     | 1230 | demo   | demo@demo.com   | 12331  
+Admin    | 129  | 123123 | admin@admin.com | 123144 

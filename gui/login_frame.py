@@ -1,24 +1,24 @@
 from .config.attributes import *
 from tkinter import Frame, Label, Button, Entry
 
+# -----------------------------------------------------
+#
+# The entrance to the application
+#
+# -----------------------------------------------------
+
 class LoginFrame(Frame):
     def __init__(self, parent, auth, switch_to_dashboard):
-        super().__init__(parent, bg = LOGIN_FRAME_BACKGROUND)
-
-        # Introduction label
+        super().__init__(parent, bg=LOGIN_FRAME_BACKGROUND)
         self.auth = auth
         self.switch_to_dashboard = switch_to_dashboard
 
+        # Introduction label
         self.label = Label(self, text=LOGIN_LABEL, font=LOGIN_LABEL_FONT)
         self.label.pack(pady=LOGIN_LABEL_PADY)
 
-        # status box
-        self.status_message = Label(self, 
-            text="", 
-            fg=LOGIN_STATUS_FG, 
-            font=LOGIN_STATUS_FONT,
-
-        )
+        # Status box
+        self.status_message = Label(self, text="", fg=LOGIN_STATUS_FG, font=LOGIN_STATUS_FONT)
 
         # ID Entry and Label
         self.id_label = Label(self, text=LOGIN_ID_LABEL, font=LOGIN_ID_LABEL_FONT)
@@ -36,9 +36,11 @@ class LoginFrame(Frame):
         result = self.auth.login(user_id)
         number_attempts = self.auth.number_attempts
 
+        self.reset_status_message()
+
         if result == 1:
             self.id_entry.delete(0, 'end')
-
+            self.auth.reset_attempts()
             self.switch_to_dashboard()
 
         elif result == 0:
@@ -66,3 +68,7 @@ class LoginFrame(Frame):
             self.id_entry.pack_forget()
             self.login_button.pack_forget()
         self.status_message.pack(pady=LOGIN_STATUS_PADY)
+
+    def reset_status_message(self):
+        self.status_message.config(text="", bg=None, fg=None)
+        self.status_message.pack_forget()
