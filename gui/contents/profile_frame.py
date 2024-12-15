@@ -22,7 +22,7 @@ class ProfileFrame(Frame):
         title_label = Label(self, text="User Profile", font=("Arial", 30, "bold"), bg="white", fg="#2c3e50")
         title_label.pack(pady=40)
 
-        # Profile Section (Centered)
+        # Profile Section
         profile_section = Frame(self, bg="white", padx=40, pady=40)
         profile_section.pack(fill="both", padx=50, pady=60, expand=True)
 

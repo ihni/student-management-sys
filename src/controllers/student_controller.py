@@ -45,7 +45,7 @@ class StudentController:
         return {'success' : f'Student {name} added successfully'}
 
     def fetch_student_by_id(self, id):
-        print(f"{CYAN}Fetching for studeny with id: {id}{RESET}")
+        print(f"{CYAN}Fetching for student with id: {id}{RESET}")
         result = self.repo.fetch_student_by_id(id)
         if result:
             print(f"{GREEN}Result: Found student id: {id}!{RESET}")
