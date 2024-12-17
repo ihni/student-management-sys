@@ -1,5 +1,5 @@
 # Student Registration System
-A simple student registration system for managing student records made with Python and Tkinter
+A CRUD app for managing student records made with Python and CTkinter, a fork of Tkinter
 
 ## Features
 - **Login system**: Allows users to log in and access the student dashboard.
@@ -32,6 +32,6 @@ A simple student registration system for managing student records made with Pyth
     python main.py
     ```
 2. After the login screen appears, enter a user id:
-    - for this example, feel free to use: `root`
+    - use this id to gain access: `root`
 
 3. After logging in, you will be taken to the dashboard, where you can view, register, and search students.
