@@ -1,10 +1,11 @@
 from ..utilities.color import *
 
 class Auth:
-    def __init__(self, repo, number_attempts):
+    def __init__(self, repo, disable_login_attempts, number_attempts):
         self.repo = repo
         self.user = None
         self.number_attempts = number_attempts
+        self.disable_login_attempts = disable_login_attempts
 
     def login(self, id) -> int:
         result = self.repo.fetch_student_by_id(id)
@@ -19,7 +20,7 @@ class Auth:
             self.user = result
             return 1
         
-        self.number_attempts -= 1
+        self.number_attempts -= 1 if self.disable_login_attempts else 0
         print(f"{RED}Login failed, number of attempts left = {self.number_attempts}{RESET}")
         return 0
 

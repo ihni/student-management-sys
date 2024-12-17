@@ -5,38 +5,46 @@ from .utils import FrameManager
 from .login_frame import LoginFrame
 from .dashboard_frame import DashboardFrame
 
+import customtkinter as ctk
+
 # -----------------------------------------------------
 #
 # Root Window with configuration settings
 #
 # -----------------------------------------------------
 
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("dark-blue")
+
 class RootWindow:
     
     def __init__(self, auth, student_controller):
         self.auth = auth
         self.student_controller = student_controller
-        self.root = Tk()
-        self.root.config(bg=ROOT_BACKGROUND)
-        self.root.title(ROOT_TITLE)
-        self.setup_geometry()
+        self.root = ctk.CTk()
 
-        image = PhotoImage(file="gui/images/book.png")
-        self.root.iconphoto(False, image)
+        self.root.title(ROOT_TITLE)
+        #self.setup_geometry()
+
+        #image = "gui/images/book.png"
+        #self.root.iconbitmap(image)
 
         self.frame_manager = FrameManager(self.root)
-
+        self.root.geometry(RootWindow.CenterWindowToDisplay(self.root, 1200, 700, self.root._get_window_scaling()))
         self.init_frames()
+    
+    @staticmethod
+    def CenterWindowToDisplay(Screen: ctk.CTk, width: int, height: int, scale_factor: float = 1.0):
+        """
+        Centers the window to the main display/monitor
         
-    def setup_geometry(self):
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = self.root.winfo_screenheight()
-        root_width = screen_width // ROOT_SCALE
-        root_height = screen_height // ROOT_SCALE
-        root_center_x = (screen_width - root_width) // 2
-        root_center_y = (screen_height - root_height) // 2
-        root_geometry = f"{int(root_width)}x{int(root_height)}+{int(root_center_x)}+{int(root_center_y)}"
-        self.root.geometry(root_geometry)
+        Thanks to HyperNylium for the function!
+        """
+        screen_width = Screen.winfo_screenwidth()
+        screen_height = Screen.winfo_screenheight()
+        x = int(((screen_width/2) - (width/2)) * scale_factor)
+        y = int(((screen_height/2) - (height/1.8)) * scale_factor)
+        return f"{width}x{height}+{x}+{y}"
 
     def init_frames(self):
         self.login_frame = LoginFrame(self.root, self.auth, self.switch_to_dashboard)
