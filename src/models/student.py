@@ -13,10 +13,10 @@ class Student:
     '''
     
     def get_data(self) -> list[str]:
-        return ( 
+        return [ 
             self.name,
             self.age,
             self.id,
             self.email,
             self.phone
-        )
+        ]

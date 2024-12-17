@@ -1,5 +1,6 @@
 from functools import partial
-from tkinter import Frame, Button
+import customtkinter as ctk
+from PIL import Image
 
 from .contents.profile_frame import ProfileFrame
 from .contents.register_student_frame import RegisterStudentFrame
@@ -12,91 +13,107 @@ from .contents.search_student_frame import SearchStudentFrame
 #
 # -----------------------------------------------------
 
-class DashboardFrame(Frame):
+class DashboardFrame(ctk.CTkFrame):
     def __init__(self, parent, auth, student_controller, frame_manager):
-        super().__init__(parent, bg="white")
+        super().__init__(parent, fg_color="#010409")
         self.student_controller = student_controller
         self.auth = auth
         self.user = auth.user
         self.frame_manager = frame_manager
 
         # content frames
-        self.profile = ProfileFrame(self, self.user)
-        self.search = SearchStudentFrame(self, self.student_controller)
-        self.view_all = ViewAllStudentsFrame(self, self.student_controller)
-        self.register = RegisterStudentFrame(self, self.student_controller, self.view_all)
+        self.content_frame = ctk.CTkFrame(self, fg_color="#010409")
+        self.content_frame.pack(side="right", fill="both", expand=True)
+
+        self.profile = ProfileFrame(self.content_frame, self.user)
+        self.search = SearchStudentFrame(self.content_frame, self.student_controller)
+        self.view_all = ViewAllStudentsFrame(self.content_frame, self.student_controller)
+        self.register = RegisterStudentFrame(self.content_frame, self.student_controller, self.view_all)
 
         self.content_frames = [self.profile, self.search, self.view_all, self.register]
 
         # navbar frame
-        self.nav_frame = Frame(self, bg="#282828")
+        self.nav_frame = ctk.CTkFrame(self, fg_color="#0D1117")
         self.nav_frame.pack(side="left", fill="y")
 
-        # content display frame
-        self.content_frame = Frame(self, bg="white")
-        self.content_frame.pack(side="right", fill="both", expand=True)
+        self.nav_label = ctk.CTkLabel(self.nav_frame, text="Dashboard", fg_color="#0D1117", font=("Helvetica", 18, "bold"))
+        self.nav_label.pack(padx=(30,70))
 
-        # button styles
+        self.nav_button_container = ctk.CTkFrame(self.nav_frame, fg_color="#0D1117")
+        self.nav_button_container.pack(expand=True, fill="both", padx=(30, 80), pady=(100,20))
+
+        # nav button styles
         button_style = {
-            "font": ("Arial", 12, "bold"),
-            "bg": "#282828",
-            "fg": "#737373",
-            "activebackground": "#2e2e2e",
-            "activeforeground": "white",
-            "relief": "flat",
-            "bd": 0,
+            "font": ("Helvetica", 14),
+            "fg_color": "#0D1117",
+            "text_color": "white",
+            "hover_color": "#1A1F25",
+            "width": 30,
+            "corner_radius": 30,
+            "height": 40,
             "width": 20,
             "height": 2,
             "anchor": "w",
         }
 
-        # Create buttons and assign commands
         self.buttons = []
-        self.btn_txt = ["View Profile", "Search Student", "View All Students", "Register Student", "Logout"]
-
-        for i, text in enumerate(self.btn_txt[:-1]):
-            button = Button(
-                self.nav_frame,
+        #user_name = '-'.join(self.user.name.strip().lower().split())
+        btn_txt = [f"View profile", f"Search student", f"View all students", f"Register student", "Sign out"]
+        btn_icons = [
+            ctk.CTkImage(light_image=Image.open("gui/images/icons/profile-icon.png"),size=(20, 20)),
+            ctk.CTkImage(light_image=Image.open("gui/images/icons/search-icon.png"),size=(20, 20)),
+            ctk.CTkImage(light_image=Image.open("gui/images/icons/users-icon.png"),size=(20, 20)),
+            ctk.CTkImage(light_image=Image.open("gui/images/icons/register-icon.png"),size=(20, 20)),
+            ctk.CTkImage(light_image=Image.open("gui/images/icons/logout-icon.png"),size=(20, 20)),
+        ]
+        for i, text in enumerate(btn_txt[:-1]):
+            button = ctk.CTkButton(
+                self.nav_button_container,
+                image=btn_icons[i],
                 text=text,
                 **button_style,
                 command=partial(self.switch_frame, self.content_frames[i], *self.content_frames)
             )
-            button.pack(pady=5, anchor="w")
+            button.pack(padx=(20,80), pady=10, anchor="w")
             self.buttons.append(button)
 
-        # Highlight the first button by default
-        self.highlight_button(self.buttons[0])
-
-        # Logout button
         logout_style = button_style.copy()
         logout_style.update({
-            "fg": "white",
-            "bg": "#E74C3C",
-            "activebackground": "#e26c5f"
+            "font": ("Helvetica", 14),
+            "text_color": "white",
+            "fg_color": "#0D1117",
+            "hover_color": "#1A1F25",
+            "image": btn_icons[-1],
+            "width": 30,
+            "corner_radius": 30,
+            "height": 40,
+            "width": 20,
+            "height": 2,
+            "anchor": "w",
         })
 
-        # Logout button
-        Button(
-            self.nav_frame,
-            text="Logout",
+        ctk.CTkButton(
+            self.nav_button_container,
+            text=btn_txt[-1],
             **logout_style,
             command=self.logout
-        ).pack(pady=20, side="bottom", anchor="w")
+        ).pack(padx=(20,80), pady=(0, 40), side="bottom", anchor="w")
 
-        # View profile is the first frame when dashboard is created
+        #highlighting view profile since view profile was made to be the first frame shown
+        self.highlight_button(self.buttons[0])
         self.switch_frame(self.profile, *self.content_frames)
 
     def switch_frame(self, frame_to_show, *frames_to_hide):
         for frame in frames_to_hide:
             frame.pack_forget()
 
-        frame_to_show.pack(fill="both", expand=True)
+        frame_to_show.pack(side="right", fill="both", expand=True, padx=20, pady=20)
         self.highlight_button(self.buttons[self.content_frames.index(frame_to_show)])
 
     def highlight_button(self, selected_button):
         for button in self.buttons:
-            button.config(bg="#282828", fg="#737373")
-        selected_button.config(bg="#282828", fg="white")
+            button.configure(fg_color="#0D1117", text_color="white", hover_color="#1A1F25")
+        selected_button.configure(fg_color="#232a32", text_color="white", hover_color="#232a32")
 
     def logout(self):
         self.auth.logout()

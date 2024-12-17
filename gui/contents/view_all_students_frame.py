@@ -1,4 +1,5 @@
-from tkinter import Frame, Label
+from CTkTable import *
+import customtkinter as ctk
 
 # -----------------------------------------------------
 #
@@ -6,64 +7,52 @@ from tkinter import Frame, Label
 #
 # -----------------------------------------------------
 
-class ViewAllStudentsFrame(Frame):
+class ViewAllStudentsFrame(ctk.CTkFrame):
     def __init__(self, parent, student_controller):
         self.student_controller = student_controller
-        super().__init__(parent, bg="white")
+        super().__init__(parent, fg_color="#010409")
 
         # Title
-        self.header = Label(self, 
-                            text=f"Students: {len(self.student_controller.fetch_all_students())}", 
-                            font=("Segoe UI", 18, "bold"), 
-                            bg="white", fg="black"
+        self.header = ctk.CTkLabel(
+            self, 
+            text=f"Students: {len(self.student_controller.fetch_all_students())}", 
+            font=("Helvetica", 18),
+            fg_color="#010409",
         )
-        self.header.pack(pady=20)
 
-        # Table container
-        self.table_frame = Frame(self, bg="white")
-        self.table_frame.pack(fill="both", expand=True, padx=20, pady=10)
+        self.header.pack(pady=20, anchor="w")
+
+        self.table_frame = ctk.CTkScrollableFrame(self, bg_color="#010409", fg_color="#010409")
 
         self.update_view()
 
+        self.table_frame.pack(expand=True, fill="both")
+
     def update_view(self):
-        # Clear any existing widgets in the table frame
         for widget in self.table_frame.winfo_children():
             widget.destroy()
 
-        self.header.config(text=f"Students: {len(self.student_controller.fetch_all_students())}")
+        self.header.configure(text=f"Students: {len(self.student_controller.fetch_all_students())}")
         
         # Fetch all students
         students = self.student_controller.fetch_all_students()
 
         # Define headers
+        data_table = []
         headers = ["ID", "Name", "Age", "Email", "Phone"]
-        header_bg = "#3b3636"
-        header_fg = "white"
-        row_colors = ["#ededed", "#FFFFFF"]
+        data_table.append(headers)
 
-        # Top border
-        top_border = Frame(self.table_frame, bg="white", highlightbackground="#D5D8DC", highlightthickness=1)
-        top_border.grid(row=0, column=0, columnspan=len(headers), sticky="ew", pady=(0, 10))
+        for student in students:
+            id, name, age, email, phone = student.get_data()
+            row = [id, name, age, email, phone]
+            data_table.append(row)
+        
+        self.table = CTkTable(
+            self.table_frame, 
+            row=len(data_table),
+            column=len(data_table[1]), 
+            values=data_table,
+            bg_color="#010409",
+        )
 
-        # Add headers
-        for col, header in enumerate(headers):
-            Label(self.table_frame, text=header, font=("Segoe UI", 12, "bold"), bg=header_bg, fg=header_fg,
-                  padx=10, pady=5, anchor="w").grid(row=1, column=col, sticky="nsew")
-
-        # Add data rows
-        for row, student in enumerate(students, start=2):
-            bg_color = row_colors[row % 2]  # Alternate row colors
-            data = [student.id, student.name, student.age, student.email, student.phone]
-            for col, value in enumerate(data):
-                Label(self.table_frame, text=value, font=("Segoe UI", 12), bg=bg_color, fg="#34495E",
-                      padx=10, pady=5, anchor="w").grid(row=row, column=col, sticky="nsew")
-
-        # Bottom border
-        bottom_border = Frame(self.table_frame, bg="white", highlightbackground="#D5D8DC", highlightthickness=1)
-        bottom_border.grid(row=len(students) + 2, column=0, columnspan=len(headers), sticky="ew", pady=(10, 0))
-
-        for col in range(len(headers)):
-            if col == 2:  # The 'Age' column
-                self.table_frame.grid_columnconfigure(col, weight=0, minsize=50)
-            else:
-                self.table_frame.grid_columnconfigure(col, weight=1, uniform="equal")
+        self.table.pack(expand=True, fill="both", padx=20, pady=20)

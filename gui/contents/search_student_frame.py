@@ -1,106 +1,110 @@
-from tkinter import Label, Frame, Entry, Button
-
+import customtkinter as ctk
 # -----------------------------------------------------
 #
 # Search Student Frame for fetching a student based on the ID
 #
+#   **TODO FIX UI**
 # -----------------------------------------------------
 
-class SearchStudentFrame(Frame):
+class SearchStudentFrame(ctk.CTkFrame):
     def __init__(self, parent, student_controller):
-        super().__init__(parent, bg="white")
+        super().__init__(parent, bg_color="#010409", fg_color="#010409")
         self.student_controller = student_controller
 
         # Title label
-        title_label = Label(self, text="Search for a Student", font=("Arial", 24, "bold"), bg="white", fg="#2c3e50")
-        title_label.pack(pady=30)
+        title_label = ctk.CTkLabel(self, text="Search for a Student", font=("Helvetica", 18, "bold"), fg_color="#010409", text_color="white")
+        title_label.pack(pady=15)
+
+        self.center = ctk.CTkFrame(self, fg_color="transparent")
+        self.center.pack(padx=20, pady=20, expand=True)
+
+
+        self.search_bar_frame = ctk.CTkFrame(
+            self.center,
+            fg_color="#151B23",
+            border_color="#313840",
+            border_width=1,
+        )
+        self.search_bar_frame.pack(padx=(10,10))
 
         # Student ID entry field
-        self.id_entry = Entry(self, font=("Arial", 14), width=35, bd=0, relief="flat", 
-                              bg="#d5d6d7", fg="#2c3e50", justify="center")
-        self.id_entry.pack(pady=20)
+        self.id_entry = ctk.CTkEntry(
+            self.search_bar_frame, 
+            font=("Helvetica", 14), 
+            justify="center",
+            width=180,
+        )
+        self.id_entry.pack(pady=20, padx=20)
         
         # Search button
-        search_button = Button(self, text="Search", font=("Arial", 14, "bold"), command=self.search_student,
-                               bg="#3498db", fg="white", relief="flat", width=20)
-        search_button.pack(pady=20)
+        ctk.CTkButton(
+            self.search_bar_frame, 
+            text="Search", 
+            font=("Helvetica", 14), 
+            command=self.search_student,
+            fg_color="#010409", 
+            text_color="white", 
+            width=20
+        ).pack(pady=20)
+        
 
-        # Profile Section for displaying student info (initially hidden)
-        self.profile_section = Frame(self, bg="white", padx=30, pady=30, bd=0)
-        self.profile_section.pack_forget()
-
-        # Info label style
-        info_label_style = ("Arial", 16)
-
-        # Labels for displaying student info
-        self.name_label = Label(self.profile_section, font=info_label_style, anchor="w", bg="white", fg="#34495e")
-        self.name_label.pack(fill="x", pady=10)
-        self.age_label = Label(self.profile_section, font=info_label_style, anchor="w", bg="white", fg="#34495e")
-        self.age_label.pack(fill="x", pady=10)
-        self.id_label = Label(self.profile_section, font=info_label_style, anchor="w", bg="white", fg="#34495e")
-        self.id_label.pack(fill="x", pady=10)
-        self.email_label = Label(self.profile_section, font=info_label_style, anchor="w", bg="white", fg="#34495e")
-        self.email_label.pack(fill="x", pady=10)
-        self.phone_label = Label(self.profile_section, font=info_label_style, anchor="w", bg="white", fg="#34495e")
-        self.phone_label.pack(fill="x", pady=10)
-
-        # Error box for when no student is found
-        self.error_box = Frame(self, bg="white", padx=20, pady=20)
-        self.error_label = Label(self.error_box, text="No student found.", font=("Arial", 16), anchor="w", 
-                                 bg="white", fg="#e74c3c", wraplength=300, justify="left")
-        self.error_label.pack(fill="x", pady=10)
-        self.error_box.pack_forget()
+        self.status_box = ctk.CTkFrame(
+            self.center,
+            fg_color="#25171C",
+            border_color="#792E2E",
+            border_width=1,
+        )
+        self.status_message = ctk.CTkLabel(
+            self.status_box,
+            text_color="white",
+        )
+        self.status_message.pack()
 
 
-        self.pack(fill="both", expand=True)
+        self.profile_section = ctk.CTkFrame(self, fg_color="#010409")
+        self.labels = {}
+
+        self.info_keys = ["Name", "Age", "ID", "Email", "Phone"]
+        for key in self.info_keys:
+            label = ctk.CTkLabel(
+                self.profile_section, font=("Helvetica", 14),
+                anchor="w", fg_color="#010409", text_color="white")
+            label.pack(fill="x", pady=10)
+            self.labels[key] = label
 
     def search_student(self):
         student_id = self.id_entry.get().strip()
+
+        # Reset previous status and profile
+        self.status_box.pack_forget()
+        self.profile_section.pack_forget()
+
         if not student_id:
-            self.error_box.pack(fill="both", padx=30, pady=20)
-            self.error_label.config(text=f"Please enter a student ID")
+            self.display_status("Please enter a student ID")
             return
-        
+
+        # Fetch student
         result = self.student_controller.fetch_student_by_id(student_id)
 
-        # Reset profile and error sections
-        self.name_label.config(text="")
-        self.age_label.config(text="")
-        self.id_label.config(text="")
-        self.email_label.config(text="")
-        self.phone_label.config(text="")
-        self.profile_section.pack_forget()
-        self.error_box.pack_forget()
-
-        # Display result if found
         if result:
-            id = result.id
-            name = result.name
-            age = result.age
-            email = result.email
-            phone = result.phone
-
-            '''---------------------------------------------------------
-            This is to make sure that the error box won't appear
-                - IDK why it pops up in other machines but not on my local machine
-                - temporary fix for now
-            '''
-            self.name_label.config(text="")
-            self.age_label.config(text="")
-            self.id_label.config(text="")
-            self.email_label.config(text="")
-            self.phone_label.config(text="")
-            self.profile_section.pack_forget()
-            self.error_box.pack_forget()
-            '''----------------------------------------------------------'''
-
-            self.name_label.config(text=f"Name: {name}")
-            self.age_label.config(text=f"Age: {age}")
-            self.id_label.config(text=f"ID: {id}")
-            self.email_label.config(text=f"Email: {email}")
-            self.phone_label.config(text=f"Phone: {phone}")
-
-            self.profile_section.pack(fill="both", padx=30, pady=20)
+            self.display_profile(result)
+            self.status_box.pack_forget()
         else:
-            self.error_box.pack(fill="both", padx=30, pady=20)
-            self.error_label.config(text=f"No student found with ID: {student_id}")
+            self.display_status(f"No student found with ID: {student_id}")
+
+    def display_status(self, message):
+        self.status_message.configure(text=message)
+        self.status_box.pack(fill="both", padx=30, pady=20)
+
+    def display_profile(self, student):
+        student_data = {
+            "Name": student.name,
+            "Age": student.age,
+            "ID": student.id,
+            "Email": student.email,
+            "Phone": student.phone
+        }
+        for key, label in self.labels.items():
+            label.configure(text=f"{key}: {student_data[key]}")
+
+        self.profile_section.pack(fill="both", padx=30, pady=20)
