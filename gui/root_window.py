@@ -1,5 +1,4 @@
 from tkinter import Tk, PhotoImage
-from .config.attributes import *
 import ctypes
 
 from .utils import FrameManager
@@ -27,7 +26,7 @@ class RootWindow:
         self.student_controller = student_controller
         self.root = ctk.CTk()
 
-        self.root.title(ROOT_TITLE)
+        self.root.title("Student Registration System")
         self.root.iconbitmap('gui/images/github-icon.ico')
 
         self.frame_manager = FrameManager(self.root)

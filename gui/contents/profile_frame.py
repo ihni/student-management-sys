@@ -82,7 +82,7 @@ fn main() {
     let age:    i32 =  """ + str(age) + """;
     let id:    &str = \"""" + user_id + """\";
     let email: &str = \"""" + email + """\";
-    let phone:  i32 = \"""" + str(phone) + """\";
+    let phone:  i32 =  """ + str(phone) + """;
 }
 """
         codebox.insert("1.0", display_code)
@@ -108,9 +108,9 @@ fn main() {
 
         Thanks to DRC!
         '''
-        mask = Image.new('L', self.PROFILE_ICON_SIZE, 0)
+        mask = Image.new('L', (1000,1000), 0)
         draw = ImageDraw.Draw(mask) 
-        draw.ellipse((0, 0) + self.PROFILE_ICON_SIZE, fill=255)
+        draw.ellipse((0, 0) + (1000,1000), fill=255)
 
         im = Image.open(image_path)
 

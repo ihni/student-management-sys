@@ -1,5 +1,6 @@
-from .config.attributes import *
 import customtkinter as ctk
+from PIL import Image, ImageOps, ImageDraw
+
 # -----------------------------------------------------
 #
 # The entrance to the application
@@ -20,7 +21,7 @@ class LoginFrame(ctk.CTkFrame):
             self,
             fg_color="transparent"
         )
-        self.center.pack(expand=True, padx=20, pady=20)
+        self.center.pack(expand=True, padx=20, pady=(0,20))
         
         self.status_box = ctk.CTkFrame(
             self.center,
@@ -34,10 +35,25 @@ class LoginFrame(ctk.CTkFrame):
             text_color="white",
         )
 
-        self.title_label = ctk.CTkLabel(self.center, text="Student Management System", font=("Helvetica", 20), text_color="white")
+        self.logo = ctk.CTkButton(
+            self.center,
+            image=ctk.CTkImage(
+                light_image=self.make_image_circular("gui/images/github-icon.ico"),
+                size=(100, 100)
+            ),
+            text="",
+            fg_color="transparent",
+            hover="#0D1117",
+        )
+        self.logo.pack(pady=(0,30))
+
+        self.title_label = ctk.CTkLabel(
+            self.center,
+            text="Student Management System",
+            font=("Helvetica", 20),
+            text_color="white")
         self.title_label.pack()
 
-        
         '''
 
         Form in the center of the login frame
@@ -122,3 +138,21 @@ class LoginFrame(ctk.CTkFrame):
         self.status_message.configure(text="")
         self.status_message.pack_forget()
         self.status_box.pack_forget()
+
+    def make_image_circular(self, image_path: str):
+        '''
+        From stack overflow
+        https://stackoverflow.com/questions/890051/how-do-i-generate-circular-thumbnails-with-pil
+
+        Thanks to DRC!
+        '''
+        mask = Image.new('L', (1000,1000), 0)
+        draw = ImageDraw.Draw(mask) 
+        draw.ellipse((0, 0) + (1000,1000), fill=255)
+
+        im = Image.open(image_path)
+
+        output = ImageOps.fit(im, mask.size, centering=(0.5, 0.5))
+        output.putalpha(mask)
+
+        return output
