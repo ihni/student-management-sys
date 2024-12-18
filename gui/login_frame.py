@@ -88,8 +88,8 @@ class LoginFrame(ctk.CTkFrame):
 
     def login(self):
         user_id = self.id_entry.get()
-        #result = self.auth.login(user_id)
-        result = self.auth.login("root")
+        result = self.auth.login(user_id)
+        #result = self.auth.login("root")
         self.reset_status_message()
 
         if result == 1:
