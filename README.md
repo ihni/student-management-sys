@@ -1,5 +1,5 @@
-# Student Registration System
-A CRUD app for managing student records made with Python and CTkinter, a fork of Tkinter
+# Student Management System
+A CRUD app for managing student records made with Python and CTkinter (a fork of Tkinter)
 
 ## Features
 - **Login system**: Allows users to log in and access the student dashboard.
@@ -15,12 +15,12 @@ A CRUD app for managing student records made with Python and CTkinter, a fork of
 
 1. Clone the repository:
     ```bash
-    git clone https://github/ihni/student-regis.git
+    git clone https://github/ihni/student-management-sys.git
     ```
 
 2. Navigate to the project directory:
     ```bash
-    cd student-regis
+    cd student-management-sys
     ```
 3. Install dependencies:
     ```bash
