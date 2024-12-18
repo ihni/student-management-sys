@@ -15,7 +15,7 @@ A CRUD app for managing student records made with Python and CTkinter (a fork of
 
 1. Clone the repository:
     ```bash
-    git clone https://github/ihni/student-management-sys.git
+    git clone https://github.com/ihni/student-management-sys.git
     ```
 
 2. Navigate to the project directory:
