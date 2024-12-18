@@ -25,19 +25,23 @@ class SearchStudentFrame(ctk.CTkFrame):
             border_width=1,
         )
         self.search_bar_section.pack(padx=(10,10), expand=True, fill="x")
-
+        ctk.CTkLabel(
+            self.search_bar_section,
+            text="Enter an ID:",
+            font=("Helvetica", 14),
+        ).pack(pady=(20,0))
         # Student ID entry field
         self.id_entry = ctk.CTkEntry(
             self.search_bar_section, 
             font=("Helvetica", 14), 
-            justify="center",
+            justify="left",
             placeholder_text="ID",
             fg_color="#0D1117",
             border_width=1,
             border_color="#313840",
             width=400,
         )
-        self.id_entry.pack(pady=(20,0), padx=20)
+        self.id_entry.pack(pady=(5,0), padx=20)
 
         self.error = ctk.CTkLabel(
             self.search_bar_section,
