@@ -86,6 +86,7 @@ fn main() {
 }
 """
         codebox.insert("1.0", display_code)
+        codebox.configure(state="disabled")
 
         #
         # End of section

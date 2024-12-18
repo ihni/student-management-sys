@@ -42,7 +42,7 @@ class ViewAllStudentsFrame(ctk.CTkFrame):
         data_table.append(headers)
 
         for student in students:
-            id, name, age, email, phone = student.get_data()
+            name, age, id, email, phone = student.get_data()
             row = [id, name, age, email, phone]
             data_table.append(row)
         
@@ -52,6 +52,12 @@ class ViewAllStudentsFrame(ctk.CTkFrame):
             column=len(data_table[1]), 
             values=data_table,
             bg_color="#010409",
+            fg_color="#010409",
+            header_color="#0a0c10",
+            colors=["#0b0f14", "#151B23"],
+            justify="left",
+            orientation="horizontal",
+            corner_radius=7,
         )
 
         self.table.pack(expand=True, fill="both", padx=20, pady=20)

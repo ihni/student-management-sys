@@ -32,6 +32,9 @@ class SearchStudentFrame(ctk.CTkFrame):
             font=("Helvetica", 14), 
             justify="center",
             placeholder_text="ID",
+            fg_color="#0D1117",
+            border_width=1,
+            border_color="#313840",
             width=400,
         )
         self.id_entry.pack(pady=(20,0), padx=20)
@@ -49,9 +52,12 @@ class SearchStudentFrame(ctk.CTkFrame):
             text="Search", 
             font=("Helvetica", 14), 
             command=self.search_student,
-            fg_color="#010409", 
-            text_color="white", 
-            width=20
+            fg_color="#238636",
+            border_color="#39924A",
+            border_width=1,
+            hover_color="#1f7530",
+            text_color="white",  
+            width=80,
         ).pack(pady=(0, 20))
         
         self.table_frame = ctk.CTkScrollableFrame(self, bg_color="#010409", fg_color="#010409")
@@ -77,7 +83,8 @@ class SearchStudentFrame(ctk.CTkFrame):
         data_table = []
         headers = ["ID", "Name", "Age", "Email", "Phone"]
         data_table.append(headers)
-        data_table.append(result.get_data())
+        name, age, id, email, phone = result.get_data()
+        data_table.append([id, name, age, email, phone])
         
         self.table = CTkTable(
             self.table_frame, 
@@ -85,6 +92,11 @@ class SearchStudentFrame(ctk.CTkFrame):
             column=len(data_table[0]), 
             values=data_table,
             bg_color="#010409",
+            fg_color="#010409",
+            header_color="#0a0c10",
+            colors=["#0b0f14", "#151B23"],
+            justify="left",
+            orientation="horizontal",
+            corner_radius=7,
         )
-
         self.table.pack(expand=True, fill="both", padx=20, pady=20)
