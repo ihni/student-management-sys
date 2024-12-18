@@ -59,14 +59,13 @@ class LoginFrame(ctk.CTkFrame):
         self.id_entry = ctk.CTkEntry(
             self.form_frame, 
             font=("Helvetica", 14), 
-            justify="center", 
+            justify="left", 
             fg_color="#0D1117",
             border_color="#3c4147",
             border_width=1,
             width=LoginFrame.FORM_ENTRY_WIDTH,
             height=LoginFrame.FORM_ENTRY_HEIGHT,
             text_color="white",
-            placeholder_text="ID",
         )
 
         self.id_entry.grid(row=3, column=0, columnspan=4, padx=20, pady=(0, 10))

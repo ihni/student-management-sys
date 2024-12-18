@@ -69,8 +69,8 @@ class DashboardFrame(ctk.CTkFrame):
                 self.nav_button_container,
                 image=btn_icons[i],
                 text=text,
+                command=partial(self.switch_frame, self.content_frames[i], *self.content_frames),
                 **button_style,
-                command=partial(self.switch_frame, self.content_frames[i], *self.content_frames)
             )
             button.pack(fill="x", padx=(2,10), pady=10, anchor="w")
             self.buttons.append(button)

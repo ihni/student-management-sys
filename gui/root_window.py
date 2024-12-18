@@ -1,5 +1,7 @@
 from tkinter import Tk, PhotoImage
 from .config.attributes import *
+import ctypes
+
 from .utils import FrameManager
 
 from .login_frame import LoginFrame
@@ -17,6 +19,8 @@ ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("dark-blue")
 
 class RootWindow:
+    appid = 'arbitrary.string'
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)
     
     def __init__(self, auth, student_controller):
         self.auth = auth
@@ -24,10 +28,7 @@ class RootWindow:
         self.root = ctk.CTk()
 
         self.root.title(ROOT_TITLE)
-        #self.setup_geometry()
-
-        #image = "gui/images/book.png"
-        #self.root.iconbitmap(image)
+        self.root.iconbitmap('gui/images/github-icon.ico')
 
         self.frame_manager = FrameManager(self.root)
         self.root.geometry(RootWindow.CenterWindowToDisplay(self.root, 1200, 700, self.root._get_window_scaling()))

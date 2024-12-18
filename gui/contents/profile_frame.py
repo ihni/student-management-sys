@@ -6,7 +6,6 @@ import random
 #
 # Profile Frame for displaying logged-in users information
 #
-#   **TODO FIX UI**
 # -----------------------------------------------------
 
 class ProfileFrame(ctk.CTkFrame):
@@ -30,7 +29,7 @@ class ProfileFrame(ctk.CTkFrame):
             font=("Helvetica", 18, "bold"),
             fg_color="#010409",
             text_color="white"
-            ).pack(pady=40)
+        ).pack()
 
 
         # Profile Section
@@ -71,18 +70,26 @@ class ProfileFrame(ctk.CTkFrame):
         email = self.user.email
         phone = self.user.phone
 
+        #
+        # Section for displaying student information in code format
+        #
+
         display_code = """
 fn main() {
-    // Welcome! This is your about me!
-    println!("<--- Student profile --->");\n
-    let name         = String::from(\"""" + name + """\");
-    let mut age: i32 = """ + str(age) + """;
-    let id_num       = String::from(\"""" + user_id + """\");
-    let mut email    = String::from(\"""" + email + """\");
-    let mut phone    = String::from(\"""" + str(phone) + """\");
+    // About me
+    println!("Welcome to your profile!");\n
+    let name:  &str = \"""" + name + """\";
+    let age:    i32 =  """ + str(age) + """;
+    let id:    &str = \"""" + user_id + """\";
+    let email: &str = \"""" + email + """\";
+    let phone:  i32 = \"""" + str(phone) + """\";
 }
 """
         codebox.insert("1.0", display_code)
+
+        #
+        # End of section
+        #
 
     def generate_profile_icons(self) -> list[object]:
         '''Returns a list of circular icons'''
@@ -93,7 +100,6 @@ fn main() {
                 size=self.PROFILE_ICON_SIZE)
             )
         return icons
-            
 
     def make_image_circular(self, image_path: str):
         '''
