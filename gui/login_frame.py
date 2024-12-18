@@ -21,8 +21,15 @@ class LoginFrame(ctk.CTkFrame):
             self,
             fg_color="transparent"
         )
-        self.center.pack(expand=True, padx=20, pady=(0,20))
+        self.center.pack(expand=True, fill="both", padx=20, pady=(120,20))
         
+        # ------------------------------
+        #                              |
+        #   Status box for displaying  |
+        #   error related messages     |
+        #                              |
+        # ------------------------------
+
         self.status_box = ctk.CTkFrame(
             self.center,
             fg_color="#25171C",
@@ -34,6 +41,12 @@ class LoginFrame(ctk.CTkFrame):
             self.status_box,
             text_color="white",
         )
+
+        # ------------------------------
+        #                              |
+        #   Form                       |
+        #                              |
+        # ------------------------------
 
         self.logo = ctk.CTkButton(
             self.center,
@@ -54,12 +67,6 @@ class LoginFrame(ctk.CTkFrame):
             text_color="white")
         self.title_label.pack()
 
-        '''
-
-        Form in the center of the login frame
-
-        '''
-
         self.form_frame = ctk.CTkFrame(
             self.center, 
             fg_color="#151B23",
@@ -71,7 +78,6 @@ class LoginFrame(ctk.CTkFrame):
         self.id_label = ctk.CTkLabel(self.form_frame, text="Student ID", font=("Helvetica", 14), text_color="white")
         self.id_label.grid(row=2, column=0, columnspan=1, pady=(20, 7))
 
-        # ID Entry Field with centered text and light background
         self.id_entry = ctk.CTkEntry(
             self.form_frame, 
             font=("Helvetica", 14), 
@@ -83,7 +89,6 @@ class LoginFrame(ctk.CTkFrame):
             height=LoginFrame.FORM_ENTRY_HEIGHT,
             text_color="white",
         )
-
         self.id_entry.grid(row=3, column=0, columnspan=4, padx=20, pady=(0, 10))
 
         # Login button
@@ -104,7 +109,6 @@ class LoginFrame(ctk.CTkFrame):
     def login(self):
         user_id = self.id_entry.get()
         result = self.auth.login(user_id)
-        #result = self.auth.login("root")
         self.reset_status_message()
 
         if result == 1:

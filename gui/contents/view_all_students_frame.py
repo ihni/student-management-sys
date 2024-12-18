@@ -37,7 +37,6 @@ class ViewAllStudentsFrame(ctk.CTkFrame):
         # Fetch all students
         students = self.student_controller.fetch_all_students()
 
-        # Define headers
         data_table = []
         headers = ["ID", "Name", "Age", "Email", "Phone"]
         data_table.append(headers)

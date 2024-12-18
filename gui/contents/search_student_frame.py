@@ -4,7 +4,6 @@ from CTkTable import *
 #
 # Search Student Frame for fetching a student based on the ID
 #
-#   **TODO FIX UI**
 # -----------------------------------------------------
 
 class SearchStudentFrame(ctk.CTkFrame):

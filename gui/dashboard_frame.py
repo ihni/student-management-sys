@@ -21,6 +21,12 @@ class DashboardFrame(ctk.CTkFrame):
         self.user = auth.user
         self.frame_manager = frame_manager
 
+        # ---------------------------
+        #                           |
+        #   Frame related content   |
+        #                           |
+        # ---------------------------
+
         # content frames
         self.content_frame = ctk.CTkFrame(self, fg_color="#010409")
         self.content_frame.pack(side="right", fill="both", expand=True)
@@ -29,8 +35,6 @@ class DashboardFrame(ctk.CTkFrame):
         self.search = SearchStudentFrame(self.content_frame, self.student_controller)
         self.view_all = ViewAllStudentsFrame(self.content_frame, self.student_controller)
         self.register = RegisterStudentFrame(self.content_frame, self.student_controller, self.view_all)
-
-        self.content_frames = [self.profile, self.search, self.view_all, self.register]
 
         # navbar frame
         self.nav_frame = ctk.CTkFrame(self, fg_color="#0D1117")
@@ -41,6 +45,12 @@ class DashboardFrame(ctk.CTkFrame):
 
         self.nav_button_container = ctk.CTkFrame(self.nav_frame, fg_color="#0D1117")
         self.nav_button_container.pack(expand=True, fill="both", padx=(30, 80), pady=(100,20))
+
+        # ----------------------------
+        #                            |
+        #   Navigation bar buttons   |
+        #                            |
+        # ----------------------------
 
         # nav button styles
         button_style = {
@@ -55,7 +65,6 @@ class DashboardFrame(ctk.CTkFrame):
         }
 
         self.buttons = []
-        #user_name = '-'.join(self.user.name.strip().lower().split())
         btn_txt = [f"View profile", f"Search student", f"View all students", f"Register student", "Sign out"]
         btn_icons = [
             ctk.CTkImage(light_image=Image.open("gui/images/icons/profile-icon.png"),size=(20, 20)),
@@ -64,6 +73,9 @@ class DashboardFrame(ctk.CTkFrame):
             ctk.CTkImage(light_image=Image.open("gui/images/icons/register-icon.png"),size=(20, 20)),
             ctk.CTkImage(light_image=Image.open("gui/images/icons/logout-icon.png"),size=(20, 20)),
         ]
+
+        self.content_frames = [self.profile, self.search, self.view_all, self.register]
+
         for i, text in enumerate(btn_txt[:-1]):
             button = ctk.CTkButton(
                 self.nav_button_container,
@@ -75,6 +87,7 @@ class DashboardFrame(ctk.CTkFrame):
             button.pack(fill="x", padx=(2,10), pady=10, anchor="w")
             self.buttons.append(button)
 
+        # logout button + function
         logout_style = button_style.copy()
         logout_style.update({
             "font": ("Helvetica", 14),
@@ -86,7 +99,7 @@ class DashboardFrame(ctk.CTkFrame):
             "height": button_style["height"],
             "anchor": "w",
         })
-
+        
         ctk.CTkButton(
             self.nav_button_container,
             text=btn_txt[-1],

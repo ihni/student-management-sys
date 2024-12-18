@@ -1,3 +1,10 @@
+# -----------------------------------------------------
+#
+#   Utility class to assist in switching 
+#   between login and dashboard frames
+#
+# -----------------------------------------------------
+
 class FrameManager:
     def __init__(self, root):
         self.root = root
