@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from PIL import Image, ImageOps, ImageDraw
+from ..packages.CTkCodeBox import *
 import random
 # -----------------------------------------------------
 #
@@ -18,31 +19,28 @@ class ProfileFrame(ctk.CTkFrame):
 
         self.center = ctk.CTkFrame(
             self,
-            fg_color="#010409",
-            bg_color="#010409",
+            fg_color="transparent",
         )
-        self.center.pack(expand=True, padx=20, pady=20)
-
-        # Profile data
-        name = self.user.name.strip().lower()
-        age = self.user.age
-        user_id = self.user.id
-        email = self.user.email
-        phone = self.user.phone
+        self.center.pack(expand=True, fill="both")
 
         # Header
         ctk.CTkLabel(
             self.center,
-            text="User Profile",
-            font=("Arial", 30, "bold"),
+            text="Student Profile",
+            font=("Helvetica", 18, "bold"),
             fg_color="#010409",
             text_color="white"
-        ).pack(pady=40)
+            ).pack(pady=40)
 
 
         # Profile Section
-        profile_section = ctk.CTkFrame(self.center, fg_color="#010409")
-        profile_section.pack(fill="both", padx=50, pady=60, expand=True)
+        profile_section = ctk.CTkFrame(
+            self.center, 
+            fg_color="#151B23",
+            border_color="#313840",
+            border_width=1,
+        )
+        profile_section.pack(expand=True, fill="x", padx=20, pady=(20, 80))
         
         # Profile Picture
         ctk.CTkButton(
@@ -50,24 +48,41 @@ class ProfileFrame(ctk.CTkFrame):
             text="", 
             bg_color="transparent", 
             fg_color="transparent",
-            hover_color="#010409",
-            corner_radius=300,
-            image=random.choice(profile_icons := self.generate_profile_icons())
-        ).pack()
+            hover_color="#151B23",
+            image=random.choice(profile_icons := self.generate_profile_icons()),
+        ).pack(side="left", padx=(20,40))
 
-        # Info Label Styling
-        info_label_style = ("Arial", 16)
-        label_style = {"anchor": "w", "fg_color": "#010409", "font": info_label_style, "text_color": "white"}
+        # Code Box for displaying student info
+        codebox = CTkCodeBox(
+            profile_section,
+            language="rust",
+            theme="github-dark",
+            fg_color="#1D2331",
+            menu=False,
+            font=("Consolas", 14),
+            wrap=True,
+        )
+        codebox.pack(padx=(5,20), pady=10, expand=True,fill="both")
 
-        # Adding the profile data labels
-        ctk.CTkLabel(profile_section, text=f"Name: {name}", **label_style).pack(fill="x", pady=8)
-        ctk.CTkLabel(profile_section, text=f"Age: {age}", **label_style).pack(fill="x", pady=8)
-        ctk.CTkLabel(profile_section, text=f"ID: {user_id}", **label_style).pack(fill="x", pady=8)
-        ctk.CTkLabel(profile_section, text=f"Email: {email}", **label_style).pack(fill="x", pady=8)
-        ctk.CTkLabel(profile_section, text=f"Phone: {phone}", **label_style).pack(fill="x", pady=8)
+        # Profile data
+        name = self.user.name.capitalize()
+        age = self.user.age
+        user_id = self.user.id
+        email = self.user.email
+        phone = self.user.phone
 
-        # Center the Profile Section on the screen
-        self.pack(fill="both", expand=True)
+        display_code = """
+fn main() {
+    // Welcome! This is your about me!
+    println!("<--- Student profile --->");\n
+    let name         = String::from(\"""" + name + """\");
+    let mut age: i32 = """ + str(age) + """;
+    let id_num       = String::from(\"""" + user_id + """\");
+    let mut email    = String::from(\"""" + email + """\");
+    let mut phone    = String::from(\"""" + str(phone) + """\");
+}
+"""
+        codebox.insert("1.0", display_code)
 
     def generate_profile_icons(self) -> list[object]:
         '''Returns a list of circular icons'''
