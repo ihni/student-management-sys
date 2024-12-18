@@ -23,6 +23,10 @@ class Repo:
         """Writes all students to the file in a formatted table with dynamic column widths."""
         print("Preparing to write to file")
         with open(self.file_path, "w") as file:
+
+            '''
+            Table solution forked from tabulate!
+            '''
             # Define headers
             headers = ["Name", "Age", "ID", "Email", "Phone"]
             

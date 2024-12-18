@@ -37,7 +37,7 @@ class DashboardFrame(ctk.CTkFrame):
         self.nav_frame.pack(side="left", fill="y")
 
         self.nav_label = ctk.CTkLabel(self.nav_frame, text="Dashboard", fg_color="#0D1117", font=("Helvetica", 18, "bold"))
-        self.nav_label.pack(padx=(30,70))
+        self.nav_label.pack(fill="x", pady=(40,0))
 
         self.nav_button_container = ctk.CTkFrame(self.nav_frame, fg_color="#0D1117")
         self.nav_button_container.pack(expand=True, fill="both", padx=(30, 80), pady=(100,20))
@@ -48,10 +48,8 @@ class DashboardFrame(ctk.CTkFrame):
             "fg_color": "#0D1117",
             "text_color": "white",
             "hover_color": "#1A1F25",
-            "width": 30,
+            "width": 230,
             "corner_radius": 30,
-            "height": 40,
-            "width": 20,
             "height": 2,
             "anchor": "w",
         }
@@ -74,7 +72,7 @@ class DashboardFrame(ctk.CTkFrame):
                 **button_style,
                 command=partial(self.switch_frame, self.content_frames[i], *self.content_frames)
             )
-            button.pack(padx=(20,80), pady=10, anchor="w")
+            button.pack(fill="x", padx=(2,10), pady=10, anchor="w")
             self.buttons.append(button)
 
         logout_style = button_style.copy()
@@ -84,11 +82,8 @@ class DashboardFrame(ctk.CTkFrame):
             "fg_color": "#0D1117",
             "hover_color": "#1A1F25",
             "image": btn_icons[-1],
-            "width": 30,
-            "corner_radius": 30,
-            "height": 40,
-            "width": 20,
-            "height": 2,
+            "width": button_style["width"],
+            "height": button_style["height"],
             "anchor": "w",
         })
 
@@ -97,7 +92,7 @@ class DashboardFrame(ctk.CTkFrame):
             text=btn_txt[-1],
             **logout_style,
             command=self.logout
-        ).pack(padx=(20,80), pady=(0, 40), side="bottom", anchor="w")
+        ).pack(fill="x", padx=(2,10), pady=(0, 40), side="bottom", anchor="w")
 
         #highlighting view profile since view profile was made to be the first frame shown
         self.highlight_button(self.buttons[0])
@@ -106,7 +101,6 @@ class DashboardFrame(ctk.CTkFrame):
     def switch_frame(self, frame_to_show, *frames_to_hide):
         for frame in frames_to_hide:
             frame.pack_forget()
-
         frame_to_show.pack(side="right", fill="both", expand=True, padx=20, pady=20)
         self.highlight_button(self.buttons[self.content_frames.index(frame_to_show)])
 
@@ -118,5 +112,4 @@ class DashboardFrame(ctk.CTkFrame):
     def logout(self):
         self.auth.logout()
         self.user = None
-        self.pack_forget()
         self.frame_manager.switch_to('login')
