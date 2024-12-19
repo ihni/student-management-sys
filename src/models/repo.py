@@ -27,23 +27,20 @@ class Repo:
             '''
             Table solution forked from tabulate!
             '''
-            # Define headers
+
             headers = ["Name", "Age", "ID", "Email", "Phone"]
-            
-            # Prepare rows
             rows = self.prepare_table_data()
 
             # Calculate column widths dynamically
             column_widths = [max(len(str(row[i])) for row in rows + [headers]) for i in range(len(headers))]
-            
+
             # Create a format string for the table rows
             format_row = " | ".join(f"{{:<{width}}}" for width in column_widths)
 
-            # Write the headers
+            # Table header being written
             file.write(format_row.format(*headers) + "\n")
             file.write("-" * (sum(column_widths) + 3 * (len(headers) - 1)) + "\n")  # Add a separator line
 
-            # Write the data rows
             for row in rows:
                 file.write(format_row.format(*row) + "\n")
 
