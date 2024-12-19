@@ -27,7 +27,7 @@ class SearchStudentFrame(ctk.CTkFrame):
         self.search_bar_section.pack(padx=(10,10), expand=True, fill="x")
         ctk.CTkLabel(
             self.search_bar_section,
-            text="Enter an ID:",
+            text="Enter an ID",
             font=("Helvetica", 14),
         ).pack(pady=(20,0))
         # Student ID entry field
@@ -81,7 +81,7 @@ class SearchStudentFrame(ctk.CTkFrame):
         result = self.student_controller.fetch_student_by_id(student_id)
 
         if not result:
-            self.error.configure(text="Student not found")
+            self.error.configure(text=f"Student '{student_id}' not found")
             return
         
         data_table = []

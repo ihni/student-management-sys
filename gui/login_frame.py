@@ -130,6 +130,7 @@ class LoginFrame(ctk.CTkFrame):
                 text="You have run out of attempts. Please contact the admin.", 
             )
             self.title_label.grid_forget()
+            self.form_frame.pack_forget()
             self.id_label.grid_forget()
             self.id_entry.grid_forget()
             self.login_button.grid_forget()
