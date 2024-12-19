@@ -11,12 +11,17 @@ class SearchStudentFrame(ctk.CTkFrame):
         super().__init__(parent, bg_color="#010409", fg_color="#010409")
         self.student_controller = student_controller
 
-        # Title label
-        title_label = ctk.CTkLabel(self, text="Search for a Student", font=("Helvetica", 18, "bold"), fg_color="#010409", text_color="white")
-        title_label.pack(pady=15)
-
         self.center = ctk.CTkFrame(self, fg_color="transparent")
         self.center.pack(padx=20, pady=20, expand=True, fill="both")
+
+        # header
+        ctk.CTkLabel(
+            self.center,
+            text="Search for a Student",
+            font=("Helvetica", 18, "bold"),
+            fg_color="#010409",
+            text_color="white"
+        ).pack(pady=15)
 
         self.search_bar_section = ctk.CTkFrame(
             self.center,
@@ -25,11 +30,13 @@ class SearchStudentFrame(ctk.CTkFrame):
             border_width=1,
         )
         self.search_bar_section.pack(padx=(10,10), expand=True, fill="x")
+
         ctk.CTkLabel(
             self.search_bar_section,
             text="Enter an ID",
             font=("Helvetica", 14),
         ).pack(pady=(20,0))
+
         # Student ID entry field
         self.id_entry = ctk.CTkEntry(
             self.search_bar_section, 
@@ -84,16 +91,19 @@ class SearchStudentFrame(ctk.CTkFrame):
             self.error.configure(text=f"Student '{student_id}' not found")
             return
         
+        self.create_table(student := result)
+    
+    def create_table(self, student: object):
         data_table = []
         headers = ["ID", "Name", "Age", "Email", "Phone"]
         data_table.append(headers)
-        name, age, id, email, phone = result.get_data()
+        name, age, id, email, phone = student.get_data()
         data_table.append([id, name, age, email, phone])
         
-        self.table = CTkTable(
+        CTkTable(
             self.table_frame, 
             row=len(data_table),
-            column=len(data_table[0]), 
+            column=len(headers), 
             values=data_table,
             bg_color="#010409",
             fg_color="#010409",
@@ -102,5 +112,4 @@ class SearchStudentFrame(ctk.CTkFrame):
             justify="left",
             orientation="horizontal",
             corner_radius=7,
-        )
-        self.table.pack(expand=True, fill="both", padx=20, pady=20)
+        ).pack(expand=True, fill="both", padx=20, pady=20)

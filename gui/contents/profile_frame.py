@@ -64,11 +64,11 @@ class ProfileFrame(ctk.CTkFrame):
         codebox.pack(padx=(5,20), pady=10, expand=True,fill="both")
 
         # Profile data
-        name = self.user.name.capitalize()
-        age = self.user.age
+        name    = self.user.name.capitalize()
+        age     = self.user.age
         user_id = self.user.id
-        email = self.user.email
-        phone = self.user.phone
+        email   = self.user.email
+        phone   = self.user.phone
 
         #
         # Section for displaying student information in code format

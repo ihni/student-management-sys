@@ -16,19 +16,17 @@ class RegisterStudentFrame(ctk.CTkFrame):
         self.student_controller = student_controller
         self.view_all = view_all
 
+
+        self.center = ctk.CTkFrame(self, fg_color="#010409", bg_color="#010409")
+        self.center.pack(expand=True, padx=20, pady=20)
+        
         ctk.CTkLabel(
-            self,
+            self.center,
             text="Register a Student",
             font=("Helvetica", 18, "bold"),
             bg_color="#010409",
-            fg_color="#010409").pack(pady=20)
-
-        self.center = ctk.CTkFrame(
-            self,
-            fg_color="#010409",
-            bg_color="#010409",
-        )
-        self.center.pack(expand=True, padx=20, pady=20)
+            fg_color="#010409"
+        ).pack(pady=20)
 
         self.form_container = ctk.CTkFrame(
             self.center,
