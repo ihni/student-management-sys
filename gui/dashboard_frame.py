@@ -46,12 +46,6 @@ class DashboardFrame(ctk.CTkFrame):
         self.nav_button_container = ctk.CTkFrame(self.nav_frame, fg_color="#0D1117")
         self.nav_button_container.pack(expand=True, fill="both", padx=(30, 80), pady=(100,20))
 
-        # ----------------------------
-        #                            |
-        #   Navigation bar buttons   |
-        #                            |
-        # ----------------------------
-
         # nav button styles
         button_style = {
             "font": ("Helvetica", 14),
@@ -65,8 +59,8 @@ class DashboardFrame(ctk.CTkFrame):
         }
 
         self.buttons = []
-        btn_txt = [f"View profile", f"Search student", f"View all students", f"Register student", "Sign out"]
-        btn_icons = [
+        nav_text = [f"View profile", f"Search student", f"View all students", f"Register student", "Sign out"]
+        nav_icons = [
             ctk.CTkImage(light_image=Image.open("gui/images/icons/profile-icon.png"),size=(20, 20)),
             ctk.CTkImage(light_image=Image.open("gui/images/icons/search-icon.png"),size=(20, 20)),
             ctk.CTkImage(light_image=Image.open("gui/images/icons/users-icon.png"),size=(20, 20)),
@@ -76,12 +70,16 @@ class DashboardFrame(ctk.CTkFrame):
 
         self.content_frames = [self.profile, self.search, self.view_all, self.register]
 
-        for i, text in enumerate(btn_txt[:-1]):
+        for i, text in enumerate(nav_text[:-1]):
             button = ctk.CTkButton(
                 self.nav_button_container,
-                image=btn_icons[i],
+                image=nav_icons[i],
                 text=text,
-                command=partial(self.switch_frame, self.content_frames[i], *self.content_frames),
+                command=partial(
+                    function := self.switch_frame,
+                    frame_itself := self.content_frames[i],
+                    *self.content_frames
+                ),
                 **button_style,
             )
             button.pack(fill="x", padx=(2,10), pady=10, anchor="w")
@@ -94,7 +92,7 @@ class DashboardFrame(ctk.CTkFrame):
             "text_color": "white",
             "fg_color": "#0D1117",
             "hover_color": "#1A1F25",
-            "image": btn_icons[-1],
+            "image": nav_icons[-1],
             "width": button_style["width"],
             "height": button_style["height"],
             "anchor": "w",
@@ -102,12 +100,11 @@ class DashboardFrame(ctk.CTkFrame):
         
         ctk.CTkButton(
             self.nav_button_container,
-            text=btn_txt[-1],
+            text=nav_text[-1],
             **logout_style,
-            command=self.logout
+            command=self.logout,
         ).pack(fill="x", padx=(2,10), pady=(0, 40), side="bottom", anchor="w")
 
-        #highlighting view profile since view profile was made to be the first frame shown
         self.highlight_button(self.buttons[0])
         self.switch_frame(self.profile, *self.content_frames)
 

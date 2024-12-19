@@ -29,7 +29,7 @@ A CRUD app for managing student records made with Python and CTkinter (a fork of
 ## Usage
 1. Run the application
     ```bash
-    python main.py
+    python main.pyv
     ```
 2. After the login screen appears, enter a user id:
     - use this id to gain access: `root`

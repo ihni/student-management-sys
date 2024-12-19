@@ -102,39 +102,33 @@ class LoginFrame(ctk.CTkFrame):
             hover_color="#1f7530",
             width=LoginFrame.FORM_ENTRY_WIDTH, 
             text_color="white", 
-            command=self.login
+            command=self.attempt_login
         )
         self.login_button.grid(row=4, column=0, columnspan=4, padx=20, pady=(10, 20))
 
-    def login(self):
+    def attempt_login(self):
         user_id = self.id_entry.get()
         result = self.auth.login(user_id)
         self.reset_status_message()
 
-        if result == 1:
-            self.id_entry.delete(0, 'end')
-            self.auth.reset_attempts()
-            self.switch_to_dashboard()
-        elif result == 0:
-            if not user_id:
-                self.status_message.configure(
-                    text=f"Fill in the form.",
-                )
-            else:
+        match result:
+            case 1:
                 self.id_entry.delete(0, 'end')
-                self.status_message.configure(
-                    text=f"Incorrect ID.", 
-                )
-        elif result == -1:
-            self.status_message.configure(
-                text="You have run out of attempts. Please contact the admin.", 
-            )
-            self.title_label.grid_forget()
-            self.form_frame.pack_forget()
-            self.id_label.grid_forget()
-            self.id_entry.grid_forget()
-            self.login_button.grid_forget()
-
+                self.auth.reset_attempts()
+                self.switch_to_dashboard()
+            case 0:
+                if not user_id:
+                    self.status_message.configure(text=f"Fill in the form.")
+                else:
+                    self.id_entry.delete(0, 'end')
+                    self.status_message.configure(text=f"Incorrect ID.")
+            case -1:
+                self.status_message.configure(text="You have run out of attempts. Please contact the admin.")
+                self.lockout()
+            case _:
+                print("An error occured??? Stopping program")
+                exit()
+        
         if self.status_message.cget("text"):
             self.status_box.pack()
             self.status_message.pack(expand=True, padx=25, pady=5)
@@ -143,6 +137,13 @@ class LoginFrame(ctk.CTkFrame):
         self.status_message.configure(text="")
         self.status_message.pack_forget()
         self.status_box.pack_forget()
+
+    def lockout(self):
+        self.title_label.grid_forget()
+        self.form_frame.pack_forget()
+        self.id_label.grid_forget()
+        self.id_entry.grid_forget()
+        self.login_button.grid_forget()
 
     def make_image_circular(self, image_path: str):
         '''
