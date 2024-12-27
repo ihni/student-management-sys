@@ -100,8 +100,11 @@ class RegisterStudentFrame(ctk.CTkFrame):
             if not value:
                 self.fields[field]["error"].configure(text=f"{field} cannot be empty.")
                 error_found = True
+            elif field == "Name" and not value.replace(" ", "").isalpha():
+                self.fields[field]["error"].configure(text="Name must only contain letters.")
+                error_found = True
             elif field == "Age" and not value.isdigit():
-                self.fields["Age"]["error"].configure(text="Age must be a number.")
+                self.fields[field]["error"].configure(text="Age must be a number.")
                 error_found = True
             elif field == "Student ID" and self.student_controller.fetch_student_by_id(value):
                 self.fields[field]["error"].configure(text=f"Student ID {value} is already taken.")
@@ -110,7 +113,7 @@ class RegisterStudentFrame(ctk.CTkFrame):
                 self.fields["Email"]["error"].configure(text="Please enter a valid email address.")
                 error_found = True
             elif field == "Phone" and not value.isdigit():
-                self.fields["Phone"]["error"].configure(text="Phone number should only contain digits.")
+                self.fields[field]["error"].configure(text="Phone number should only contain digits.")
                 error_found = True
 
         if error_found:
